@@ -1,16 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { Component } from "react";
 import "./index.css";
 
-function Square(props) {
+const Square = props => {
+  const { onClick, value } = props;
   return (
     <button className="square"
-      onClick={props.onClick}>
-      {props.value}
+      onClick={onClick}>
+      {value}
     </button>);
 }
 
-class Board extends React.Component {
+class Board extends Component {
 
   renderSquare(i) {
     const value = this.props.squares[i];
@@ -45,7 +45,30 @@ class Board extends React.Component {
   }
 }
 
-class Game extends React.Component {
+function MoveList(props) {
+  // (value, index, array)
+  const moves = props.moves.map((step, move) => {
+    const location = step.location;
+    const desc = move
+      ? `Go to move #${move}: (${location[0]}, ${location[1]})`
+      : 'Go to game start';
+    const disabled = move === props.stepNumber;
+
+    return (
+      <li key={move}>
+        <button onClick={() => props.onClick(move)} disabled={disabled}>{desc}</button>
+      </li>
+    );
+  });
+
+  if (!props.isAscending) {
+    moves.reverse()
+  }
+
+  return <ol>{moves}</ol>
+}
+
+export class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,13 +98,13 @@ class Game extends React.Component {
     const location = [Math.floor(i / 3), i % 3];
 
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    // 'concat' is immutable
+    // 'concat'/spread syntax is immutable
     // 'push' is mutable
     this.setState({
-      history: history.concat([{
+      history: [...history, {
         squares: squares,
         location: location
-      }]),
+      }],
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     })
@@ -95,9 +118,9 @@ class Game extends React.Component {
   }
 
   toggleSort() {
-    this.setState({
-      isAscending: !this.state.isAscending
-    })
+    this.setState(currState => ({
+      isAscending: !currState.isAscending
+    }))
   }
 
   calculateWinner(squares) {
@@ -130,38 +153,22 @@ class Game extends React.Component {
     return true
   }
 
+  renderStatus(squares, winner) {
+    if (winner) {
+      return "Winner: " + winner;
+    } else if (this.isGameEnd(squares)) {
+      return "Draw!"
+    } else {
+      return "Next player: " + (this.state.xIsNext ? 'X' : 'O');
+    }
+  }
+
   render() {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[this.state.stepNumber];
 
     const [winner, line] = this.calculateWinner(current.squares);
-    let status;
-    if (winner) {
-      status = "Winner: " + winner;
-    } else if (this.isGameEnd(current.squares)) {
-      status = "Draw!"
-    } else {
-      status = "Next player: " + (this.state.xIsNext ? 'X' : 'O');
-    }
-
-    // (value, index, array)
-    const moves = history.map((step, move) => {
-      const location = step.location;
-      const desc = move
-        ? 'Go to move #' + move + ': (' + location[0] + ', ' + location[1] + ')'
-        : 'Go to game start';
-      const disabled = move === this.state.stepNumber;
-
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)} disabled={disabled}>{desc}</button>
-        </li>
-      );
-    })
-
-    if (!this.state.isAscending) {
-      moves.reverse()
-    }
+    const status = this.renderStatus(current.squares, winner);
 
     const order = this.state.isAscending ? 'Desc' : 'Ascend';
     const sort = <button onClick={() => this.toggleSort()}>{order}</button>
@@ -178,13 +185,12 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <div>{sort}</div>
-          <ol>{moves}</ol>
+          <MoveList moves={history}
+            onClick={(i) => this.jumpTo(i)}
+            isAscending={this.state.isAscending}
+            stepNumber={this.state.stepNumber} />
         </div>
       </div>
     );
   }
 }
-
-// ========================================
-
-ReactDOM.render(<Game />, document.getElementById("root"));
