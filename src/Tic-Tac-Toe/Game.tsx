@@ -46,7 +46,7 @@ export const Game: React.FC<{}> = () => {
 
   const { squares } = history[stepNumber];
   const { winner, line } = calculateWinner(squares);
-  const isGameEnd = squares.every(i => i)
+  const isGameEnd = squares.every(i => i != null)
 
   // TODO: change to reducer
   const handleClick = (i: number) => {
@@ -58,23 +58,24 @@ export const Game: React.FC<{}> = () => {
       return;
     }
 
-    setStepNumber(history.length)
-    setXIsNext(prev => !prev)
     setHistory(prevHistory => {
       const newSquares = prevHistory[stepNumber].squares.slice();
       newSquares[i] = xIsNext ? 'X' : 'O';
 
       const location = [Math.floor(i / 3), i % 3];
 
-      return [...prevHistory, {
+      return prevHistory.concat([{
         squares: newSquares,
         location: location
-      }]
+      }]);
     })
+    setStepNumber(history.length)
+    setXIsNext(prev => !prev)
   }
 
   // TODO: change to reducer
   const jumpTo = (stepNumber: number) => {
+    setHistory(prevHistory => prevHistory.slice(0, stepNumber + 1))
     setStepNumber(stepNumber);
     setXIsNext(stepNumber % 2 === 0)
   }

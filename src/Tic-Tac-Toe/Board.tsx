@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Square } from './Square';
 
 type BoardProps = {
@@ -22,14 +22,14 @@ export const Board: React.FC<BoardProps> = ({ squares, onClick, bold }) => {
   const renderRow = (i: number) => {
     return (
       <div className="board-row">
-        {[1, 2, 3].map(j => renderSquare(i * 3 + j))}
+        {[0, 1, 2].map(j => <Fragment key={j}>{renderSquare(i * 3 + j)}</Fragment>)}
       </div>
     );
   }
 
   return (
     <div>
-      {[1, 2, 3].map(renderRow)}
+      {[0, 1, 2].map(i => <Fragment key={i}>{renderRow(i)}</Fragment>)}
     </div>
   );
 }
