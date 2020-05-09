@@ -1,23 +1,24 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Todo from './Todo'
 import { TodoState } from '../Types/States/TodoState'
+import { useSelector, useDispatch } from 'react-redux'
+import { getVisibleTodos } from '../Selectors/todosSelectors'
+import { toggleTodo } from '../Actions/actionCreators'
 
-export type StateProps = {
-  todos: TodoState
-}
+const TodoList: React.FC<{}> = () => {
 
-export type DispatchProps = {
-  onTodoClick: (id: number) => void
-}
+  const todos: TodoState = useSelector(getVisibleTodos)
 
-type TodoListProps = StateProps & DispatchProps
+  const dispatch = useDispatch()
 
-const TodoList: React.FC<TodoListProps> = ({ todos, onTodoClick }) => (
-  <ul>
+  const onTodoClick = useCallback((id) => dispatch(toggleTodo(id)), [dispatch])
+
+  return (<ul>
     {todos.map((todo) => (
       <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
     ))}
-  </ul>
-)
+  </ul>);
+
+}
 
 export default TodoList

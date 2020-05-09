@@ -1,8 +1,8 @@
 import { TodoState } from "../Types/States/TodoState"
-import { AddTodoAction, ToggleTodoAction, ADD_TODO, TOGGLE_TODO } from "../Types/Actions/TodoActions"
+import { TodoActionTypes, AddTodoAction, ToggleTodoAction, ADD_TODO, TOGGLE_TODO } from "../Types/Actions/TodoActions"
 import { initialState } from "./rootReducer"
 
-const todos: (state: TodoState, action: AddTodoAction | ToggleTodoAction) => TodoState
+const todos: (state: TodoState, action: TodoActionTypes) => TodoState
   = (state = initialState.todos, action) => {
     switch (action.type) {
       case ADD_TODO:

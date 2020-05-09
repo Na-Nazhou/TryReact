@@ -8,6 +8,7 @@ const { SHOW_ALL } = VisibilityFilter
 export const initialState: AppState = {
   todos: [],
   visibilityFilter: SHOW_ALL,
+  keyword: ""
 }
 
 // default argument syntax

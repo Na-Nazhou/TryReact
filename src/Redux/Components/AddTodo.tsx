@@ -1,24 +1,25 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { addTodo } from '../Actions/actionCreators'
-import { AddTodoAction } from '../Types/Actions/TodoActions'
 
-type AddTodoProps = {
-  dispatch: (action: AddTodoAction) => void
-}
+const AddTodo: React.FC<{}> = () => {
+  const dispatch = useDispatch()
 
-const AddTodo: React.FC<AddTodoProps> = ({ dispatch }) => {
-  let input: HTMLInputElement
+  let input: HTMLInputElement | null = null
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!input) {
+      return
+    }
+
     if (!input.value.trim()) {
       return
     }
-    console.log(input)
+
     dispatch(addTodo(input.value))
     input.value = ''
-  }
+  }, [dispatch, input])
 
   return (
     <div>
@@ -32,4 +33,4 @@ const AddTodo: React.FC<AddTodoProps> = ({ dispatch }) => {
   )
 }
 
-export default connect()(AddTodo)
+export default AddTodo

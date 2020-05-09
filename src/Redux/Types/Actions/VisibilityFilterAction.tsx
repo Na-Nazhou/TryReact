@@ -7,6 +7,6 @@ enum VisibilityFilterAction {
 
 export const SET_VISIBILITY_FILTER = VisibilityFilterAction.SET_VISIBILITY_FILTER
 export type SetVisibilityFilterAction = {
-  type: VisibilityFilterAction.SET_VISIBILITY_FILTER,
+  type: typeof SET_VISIBILITY_FILTER,
   filter: VisibilityFilterState
 }

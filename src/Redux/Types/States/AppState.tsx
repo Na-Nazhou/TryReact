@@ -4,4 +4,5 @@ import { VisibilityFilterState } from "./VisibilityFilterState";
 export type AppState = {
   todos: TodoState
   visibilityFilter: VisibilityFilterState
+  keyword: string
 }
