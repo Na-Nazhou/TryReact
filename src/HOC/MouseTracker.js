@@ -34,6 +34,7 @@ class Mouse extends Component {
   }
 }
 
+// Render prop
 export class MouseTracker extends Component {
   render() {
     return (
@@ -47,6 +48,7 @@ export class MouseTracker extends Component {
   }
 }
 
+// HOC
 export function withMouse(WrappedComponent) {
   return class extends Component {
     render() {

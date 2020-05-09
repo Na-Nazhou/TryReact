@@ -1,20 +1,16 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from './ThemeContext';
 
-export class ThemedButton extends Component {
+export const ThemedButton = (props) => {
   // Assign a contextType to read the current theme context.  
   // React will find the closest theme Provider above and use its value.  
   // In this example, the current theme is "dark".  
-  static contextType = ThemeContext;
+  const theme = useContext(ThemeContext);
 
-  render() {
-    let props = this.props;
-    let theme = this.context;
-    return (
-      <button
-        {...props}
-        style={{ backgroundColor: theme.background }}
-      />
-    );
-  }
+  return (
+    <button
+      {...props}
+      style={{ backgroundColor: theme.background, color: theme.foreground }}
+    />
+  );
 }

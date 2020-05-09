@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class Reservation extends Component {
+export class ReservationForm extends Component {
 
   constructor(props) {
     super(props);

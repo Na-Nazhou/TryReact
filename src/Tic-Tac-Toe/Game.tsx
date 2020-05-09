@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Board } from './Board';
 import { MoveList } from './MoveList';
-import "./index.css";
 
 export type HistoryType = {
   squares: string[],
@@ -49,35 +48,32 @@ export const Game: React.FC<{}> = () => {
   const { winner, line } = calculateWinner(squares);
   const isGameEnd = squares.every(i => i)
 
+  // TODO: change to reducer
   const handleClick = (i: number) => {
-    const newSquares = squares.slice();
-
     // Immutability
     // var player = {score: 1, name: 'Jeff'};
     // var newPlayer = Object.assign({}, player, { score: 2 });
     // var newPlayer = {...player, score: 2};
-    if (winner || newSquares[i]) {
+    if (winner || squares[i]) {
       return;
     }
 
-    const location = [Math.floor(i / 3), i % 3];
-
-    newSquares[i] = xIsNext ? 'X' : 'O';
-    // 'concat'/spread syntax is immutable
-    // 'push' is mutable
-
     setStepNumber(history.length)
-    setXIsNext(!xIsNext)
-    setHistory([...history, {
-      squares: newSquares,
-      location: location
-    }])
+    setXIsNext(prev => !prev)
+    setHistory(prevHistory => {
+      const newSquares = prevHistory[stepNumber].squares.slice();
+      newSquares[i] = xIsNext ? 'X' : 'O';
+
+      const location = [Math.floor(i / 3), i % 3];
+
+      return [...prevHistory, {
+        squares: newSquares,
+        location: location
+      }]
+    })
   }
 
-  const toggleSort = () => {
-    setIsAscending(!isAscending)
-  }
-
+  // TODO: change to reducer
   const jumpTo = (stepNumber: number) => {
     setStepNumber(stepNumber);
     setXIsNext(stepNumber % 2 === 0)
@@ -94,6 +90,9 @@ export const Game: React.FC<{}> = () => {
   }
   const status = getStatus()
 
+  const toggleSort = () => {
+    setIsAscending(!isAscending)
+  }
   const order = isAscending ? 'Desc' : 'Ascend';
   const sort = <button onClick={toggleSort}>{order}</button>
 

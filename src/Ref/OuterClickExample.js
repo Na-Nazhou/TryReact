@@ -20,8 +20,8 @@ export class OuterClickExample extends Component {
   }
 
   onClickHandler() {
-    this.setState(currentState => ({
-      isOpen: !currentState.isOpen
+    this.setState(({ isOpen }) => ({
+      isOpen: !isOpen
     }));
   }
 

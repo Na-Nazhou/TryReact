@@ -13,8 +13,8 @@ export class BlurExample extends Component {
   }
 
   onClickHandler() {
-    this.setState(currentState => ({
-      isOpen: !currentState.isOpen
+    this.setState(({ isOpen }) => ({
+      isOpen: !isOpen
     }));
   }
 
