@@ -11,6 +11,13 @@ export const initialState: AppState = {
   keyword: ""
 }
 
+const rootReducer = combineReducers({
+  todos,
+  visibilityFilter
+})
+
+export default rootReducer
+
 // default argument syntax
 // export function todoApp(state = initialState, action) {
 //   switch (action.type) {
@@ -37,10 +44,3 @@ export const initialState: AppState = {
 //     todos: todos(state.todos, action)
 //   }
 // }
-
-const rootReducer = combineReducers({
-  todos,
-  visibilityFilter
-})
-
-export default rootReducer

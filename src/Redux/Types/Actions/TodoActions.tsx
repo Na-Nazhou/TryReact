@@ -1,5 +1,6 @@
 enum TodoAction {
   ADD_TODO = "ADD_TODO",
+  DELETE_TODO = "DELETE_TODO",
   TOGGLE_TODO = "TOGGLE_TODO"
 }
 
@@ -16,5 +17,11 @@ export type ToggleTodoAction = {
   id: number
 }
 
-export type TodoActionTypes = AddTodoAction | ToggleTodoAction
+export const DELETE_TODO = TodoAction.DELETE_TODO
+export type DeleteTodoAction = {
+  type: typeof DELETE_TODO
+  id: number
+}
+
+export type TodoActionTypes = AddTodoAction | ToggleTodoAction | DeleteTodoAction
 

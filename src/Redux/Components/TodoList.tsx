@@ -3,7 +3,7 @@ import Todo from './Todo'
 import { TodoState } from '../Types/States/TodoState'
 import { useSelector, useDispatch } from 'react-redux'
 import { getVisibleTodos } from '../Selectors/todosSelectors'
-import { toggleTodo } from '../Actions/actionCreators'
+import { toggleTodo, deleteTodo } from '../Actions/todoActions'
 
 const TodoList: React.FC<{}> = () => {
 
@@ -11,11 +11,12 @@ const TodoList: React.FC<{}> = () => {
 
   const dispatch = useDispatch()
 
-  const onTodoClick = useCallback((id) => dispatch(toggleTodo(id)), [dispatch])
+  const handleClick = useCallback((id) => dispatch(toggleTodo(id)), [dispatch])
+  const handleDelete = useCallback((id) => dispatch(deleteTodo(id)), [dispatch])
 
   return (<ul>
     {todos.map((todo) => (
-      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+      <Todo key={todo.id} {...todo} onClick={() => handleClick(todo.id)} onDelete={() => handleDelete(todo.id)} />
     ))}
   </ul>);
 

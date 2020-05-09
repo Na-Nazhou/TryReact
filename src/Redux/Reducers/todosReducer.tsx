@@ -1,5 +1,5 @@
 import { TodoState } from "../Types/States/TodoState"
-import { TodoActionTypes, AddTodoAction, ToggleTodoAction, ADD_TODO, TOGGLE_TODO } from "../Types/Actions/TodoActions"
+import { TodoActionTypes, AddTodoAction, ToggleTodoAction, ADD_TODO, TOGGLE_TODO, DELETE_TODO, DeleteTodoAction } from "../Types/Actions/TodoActions"
 import { initialState } from "./rootReducer"
 
 const todos: (state: TodoState, action: TodoActionTypes) => TodoState
@@ -15,13 +15,20 @@ const todos: (state: TodoState, action: TodoActionTypes) => TodoState
           }
         ]
       case TOGGLE_TODO:
-        return state.map((todo, index) => {
-          if (index === (action as ToggleTodoAction).id) {
+        return state.map((todo) => {
+          if (todo.id === (action as ToggleTodoAction).id) {
             return Object.assign({}, todo, {
               completed: !todo.completed
             })
           }
           return todo
+        })
+      case DELETE_TODO:
+        return state.filter((todo) => {
+          if (todo.id === (action as DeleteTodoAction).id) {
+            return false
+          }
+          return true
         })
       default:
         return state

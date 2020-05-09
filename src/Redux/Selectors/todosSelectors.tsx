@@ -23,6 +23,7 @@ export const getVisibleTodos = createSelector(
   }
 )
 
+//TODO
 const getKeyword = (state: AppState): string => state.keyword
 
 export const getVisibleTodosFilteredByKeyword = createSelector(

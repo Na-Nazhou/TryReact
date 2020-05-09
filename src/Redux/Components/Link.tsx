@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getVisibilityFilter } from '../Selectors/visibilityFilterSelector'
 import { VisibilityFilterState } from '../Types/States/VisibilityFilterState'
-import { setVisibilityFilter } from '../Actions/actionCreators'
+import { setVisibilityFilter } from '../Actions/visibilityFilterActions'
 
 type LinkProps = {
   filter: VisibilityFilterState
@@ -14,11 +14,11 @@ const Link: React.FC<LinkProps> = ({ filter, children }) => {
   const active = filter === currentFilter
 
   const dispatch = useDispatch()
-  const onClick = useCallback(() => dispatch(setVisibilityFilter(filter)), [dispatch, filter])
+  const handleClick = useCallback(() => dispatch(setVisibilityFilter(filter)), [dispatch, filter])
 
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       disabled={active}
       style={{
         marginLeft: '4px'
