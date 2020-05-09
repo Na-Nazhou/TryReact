@@ -11,6 +11,7 @@ import { Clock } from "./Hooks/Clock";
 import { Topics } from "./React-router/Topics";
 import { ContextDemo } from "./Context/ContextDemo"
 import { TemperatureCalculator } from "./Form/TemperatureCalculator";
+import { OuterClickExample } from "./Accessibility/OuterClickExample";
 
 export const App = () => {
   return (
@@ -36,6 +37,9 @@ export const App = () => {
             <li>
               <NavLink to="/temperature-calculator">TemperatureCalculator</NavLink>
             </li>
+            <li>
+              <NavLink to="/outer-click">OuterClick</NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -56,6 +60,9 @@ export const App = () => {
           </Route>
           <Route path="/temperature-calculator">
             <TemperatureCalculator />
+          </Route>
+          <Route path="/outer-click">
+            <OuterClickExample />
           </Route>
           {/* Less specific ones at the last */}
           <Route path="/">
