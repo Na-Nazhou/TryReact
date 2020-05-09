@@ -7,9 +7,10 @@ import {
 } from "react-router-dom";
 
 import { Game as TicTacToe } from "./Tic-Tac-Toe/Game";
-import { Clock } from "./Clock";
-import { Topics } from "./Topics";
+import { Clock } from "./Hooks/Clock";
+import { Topics } from "./React-router/Topics";
 import { ContextDemo } from "./Context/ContextDemo"
+import { TemperatureCalculator } from "./Form/TemperatureCalculator";
 
 export const App = () => {
   return (
@@ -32,6 +33,9 @@ export const App = () => {
             <li>
               <NavLink to="/context-demo">ContextDemo</NavLink>
             </li>
+            <li>
+              <NavLink to="/temperature-calculator">TemperatureCalculator</NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -49,6 +53,9 @@ export const App = () => {
           </Route>
           <Route path="/context-demo">
             <ContextDemo />
+          </Route>
+          <Route path="/temperature-calculator">
+            <TemperatureCalculator />
           </Route>
           {/* Less specific ones at the last */}
           <Route path="/">

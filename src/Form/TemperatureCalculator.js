@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-function BoilingVerdict(props) {
-  if (props.celsius >= 100) {
+const BoilingVerdict = ({ celsius }) => {
+  if (celsius >= 100) {
     return <p>The water would boil.</p>;
   }
   return <p>The water would not boil.</p>;
@@ -30,7 +30,7 @@ class TemperatureInput extends Component {
   }
 }
 
-export class Calculator extends React.Component {
+export class TemperatureCalculator extends Component {
   constructor(props) {
     super(props);
     this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
@@ -65,7 +65,7 @@ export class Calculator extends React.Component {
   }
 
   render() {
-    const { temperature, scale } = this.props;
+    const { temperature, scale } = this.state;
     const celsius = scale === 'f'
       ? this.tryConvert(temperature, this.toCelsius)
       : temperature;
