@@ -7,13 +7,15 @@ type TodoProps = TodoItem & {
 }
 
 const Todo: React.FC<TodoProps> = ({ onClick, onDelete, completed, text }) => (
-  <li
-    onClick={onClick}
-    style={{
-      textDecoration: completed ? 'line-through' : 'none'
-    }}
-  >
-    {text}
+  <li>
+    <span
+      style={{
+        textDecoration: completed ? 'line-through' : 'none',
+        cursor: "pointer"
+      }}
+      onClick={onClick}>
+      {text}
+    </span>
     <span className="close" onClick={onDelete}>x</span>
   </li>
 )
